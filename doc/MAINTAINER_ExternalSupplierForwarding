@@ -1,0 +1,17 @@
+# --
+# MAINTAINER_ExternalSupplierForwarding - maintainer log
+# Copyright (C) 2006-2009 c.a.p.e. IT GmbH, http://www.cape-it.de/
+# --
+# $Id$
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+#
+# Initial: torsten.thau(a)cape-it.de 
+# 
+# MinorChanges:
+#    fober: Remove all specific stuff from ITM
+#
+

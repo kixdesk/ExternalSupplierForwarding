@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <CVS>$Id$</CVS>
+    <Name>ExternalSupplierForwarding</Name>
+    <Version>0.0.0</Version>
+    <Framework>5.0.x</Framework>
+    <Vendor>c.a.p.e. IT GmbH</Vendor>
+    <URL>http://www.cape-it.de/</URL>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <ChangeLog>2008-07-09 v0.0.0 Absolutely new package.</ChangeLog>
+    <Description Translatable="1">This package forwards tickets and specified data of linked CIs to external suppliers if these tickets ar moved to corresponding queues.</Description>
+    <BuildDate>?</BuildDate>
+    <BuildHost>?</BuildHost>
+    <ModuleRequired>Unicode::String</ModuleRequired>
+    <PackageRequired Version="5.0.1">ITSMConfigurationManagement</PackageRequired>
+    <Filelist>
+        <File Permission="644" Location="Kernel/Config/Files/ExternalSupplierForwarding.xml" />
+        <File Permission="644" Location="Kernel/Config/Files/FwdLinkedObjectData.xml" />
+        <File Permission="644" Location="Kernel/Language/de_ExternalSupplierForwarding.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentTicketPrintForwardFax.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketPrintForwardFax.tt" />
+        <File Permission="644" Location="Kernel/System/AsynchronousExecutor/ExternalSupplierForwarding.pm" />
+        <File Permission="644" Location="Kernel/System/FwdLinkedObjectData.pm" />
+        <File Permission="644" Location="Kernel/System/PostMaster/Filter/PGPInlineDecryptFilter.pm" />
+        <File Permission="644" Location="Kernel/System/Ticket/Acl/ExternalSupplierForwarding.pm" />
+        <File Permission="644" Location="Kernel/System/Ticket/Event/ExternalSupplierForwarding.pm" />
+        <File Permission="644" Location="doc/CHANGES_ExternalSupplierForwarding.md" />
+        <File Permission="644" Location="doc/en/ExternalSupplierForwarding.odt" />
+        <File Permission="644" Location="doc/en/ExternalSupplierForwarding.pdf" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/note-supplier-external.png" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/note-supplier-internal.png" />
+        <File Permission="644" Location="var/packagesetup/ExternalSupplierForwarding.pm" />
+    </Filelist>
+    <DatabaseInstall>
+        <Insert Table="article_type">
+            <Data Key="name" Type="Quote">note-supplier-external</Data>
+            <Data Key="comments" Type="Quote">created by ExternalSupplierForwarding installation</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="article_type">
+            <Data Key="name" Type="Quote">note-supplier-internal</Data>
+            <Data Key="comments" Type="Quote">created by ExternalSupplierForwarding installation</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+    </DatabaseInstall>
+    <DatabaseUpgrade>
+        <Insert Table="article_type" Version="1.4.1">
+            <Data Key="name" Type="Quote">note-supplier-external</Data>
+            <Data Key="comments" Type="Quote">created by ExternalSupplierForwarding installation</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="article_type" Version="1.4.1">
+            <Data Key="name" Type="Quote">note-supplier-internal</Data>
+            <Data Key="comments" Type="Quote">created by ExternalSupplierForwarding installation</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+    </DatabaseUpgrade>
+    <DatabaseReinstall>
+    </DatabaseReinstall>
+    <DatabaseUninstall>
+    </DatabaseUninstall>
+    <CodeInstall Type="post"><![CDATA[
+    my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+    $Kernel::OM->Get($CodeModule)->CodeInstall();
+    ]]>
+    </CodeInstall>
+    <CodeReinstall Type="post"><![CDATA[
+    my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+    $Kernel::OM->Get($CodeModule)->CodeReinstall();
+    ]]>
+    </CodeReinstall>
+    <CodeUpgrade Type="post"><![CDATA[
+    my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+    $Kernel::OM->ObjectsDiscard(
+        Objects            => [$CodeModule],
+        ForcePackageReload => 1,
+    );
+    $Kernel::OM->Get($CodeModule)->CodeUpgrade();
+    ]]>
+    </CodeUpgrade>
+    <CodeUninstall Type="pre"><![CDATA[
+    my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+    $Kernel::OM->Get($CodeModule)->CodeUninstall();
+    ]]>
+    </CodeUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en">
+        <![CDATA[
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to install the OTRS module ExternalSupplierForwarding.<br/>
+        <br/>
+        <br/>
+        REQUIRED OTRS PACKAGES
+        <ul>
+            <li>ITSMConfigurationManagement > 5.0.1</li>
+        </ul>
+        <br/>
+        <br/>
+        c.a.p.e. IT ...easy.<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en">
+        <![CDATA[
+        <br/>
+        The package has been installed.<br/>
+        <br/>
+        <br/>
+        c.a.p.e. IT ...easy.<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en">
+        <![CDATA[
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS module ExternalSupplierForwarding.<br/>
+        <br/>
+        <br/>
+        c.a.p.e. IT ...easy.<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
+        <![CDATA[
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to UNINSTALL the OTRS module ExternalSupplierForwarding.<br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        c.a.p.e. IT ...easy.<br/>
+        <br/>
+    ]]></IntroUninstall>
+</otrs_package>
